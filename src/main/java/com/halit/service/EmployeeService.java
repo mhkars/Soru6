@@ -3,6 +3,7 @@ package com.halit.service;
 import com.halit.repository.IEmployeeRepository;
 import com.halit.repository.entity.Company;
 import com.halit.repository.entity.Employee;
+import com.halit.repository.entity.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class EmployeeService {
     }
 
     public List<Employee> findAll() {
-        return  employeeRepository.findAll();
+        return  employeeRepository.findAllByStatus(Status.ACTIVE);
     }
 
     public Boolean updateEmployee(Employee employee) {
@@ -38,10 +39,11 @@ public class EmployeeService {
         }
     }
 
-    public Boolean deleteEmployee(Long id) {
-        Optional<Employee> employee1 = findById(id);
-        if(employee1.isPresent()){
-            employeeRepository.delete(employee1.get());
+    public Boolean deleteEmployee(Employee employee) {
+        Optional<Employee> employee1 = findById(employee.getId());
+        if(employee1.isPresent() && employee1.get().getStatus().equals(Status.ACTIVE)){
+            employee1.get().setStatus(Status.DELETED);
+            employeeRepository.save(employee1.get());
             return true;
         }else{
             return false;

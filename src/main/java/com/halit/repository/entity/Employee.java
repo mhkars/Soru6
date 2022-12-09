@@ -22,6 +22,9 @@ public class Employee {
     @Column(length = 64)
     private String surname;
     private Integer age;
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Status status=Status.ACTIVE;
     @ManyToOne
     @JoinColumn(name = "company_id" ,referencedColumnName = "id")
     private Company company;

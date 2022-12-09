@@ -1,5 +1,6 @@
 package com.halit.repository.entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,5 +25,7 @@ public class Company {
     private String sector;
     @Column(length = 64)
     private String city;
-
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Status status=Status.ACTIVE;
 }

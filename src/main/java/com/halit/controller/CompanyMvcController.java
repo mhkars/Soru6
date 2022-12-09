@@ -28,10 +28,11 @@ public class CompanyMvcController {
                     .sector(company.getSector())
                     .city(company.getCity()).build();
             companyService.save(company1);
-            System.out.println("Şirtket kaydı başarılı");
+            System.out.println("Sirket kaydı başarılı");
             return ResponseEntity.ok(company1);
         }catch (Exception e){
             System.out.println(e.getMessage());
+            System.out.println("Sirket kaydı basarisiz");
             throw  new RuntimeException();
         }
     }
@@ -40,18 +41,26 @@ public class CompanyMvcController {
     public ResponseEntity<Company> updateCompany(@RequestBody Company company) {
         try {
             companyService.updateCompany(company);
-            System.out.println("Şirtket kaydı başarılı");
+            System.out.println("Sirket guncelleme basarili.");
         return ResponseEntity.ok(company);
         }catch (Exception e){
             System.out.println(e.getMessage());
+            System.out.println("Sirket guncelleme basarisiz.");
             throw  new RuntimeException();
         }
     }
 
     @DeleteMapping(DELETE)
-    public ResponseEntity<Boolean> deleteCompany(@PathVariable Long id) {
-
-        return ResponseEntity.ok(companyService.deleteCompany(id));
+    public ResponseEntity<Boolean> deleteCompany(@RequestBody Company company) {
+        try {
+            companyService.deleteCompany(company);
+            System.out.println("Sirket silindi");
+            return ResponseEntity.ok(true);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Sirket silinemedi");
+            throw  new RuntimeException();
+        }
     }
 
     @GetMapping(GETALL)

@@ -34,6 +34,7 @@ public class EmployeeMvcController {
             return ResponseEntity.ok(employee);
         }catch (Exception e){
             System.out.println(e.getMessage());
+            System.out.println("Calisan kaydi basarisiz.");
             throw  new RuntimeException();
         }
     }
@@ -50,10 +51,11 @@ public class EmployeeMvcController {
     }
 
     @DeleteMapping(DELETE)
-    public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<Boolean> deleteEmployee(@RequestBody Employee employee) {
         try {
-            employeeService.deleteEmployee(id);
-            return ResponseEntity.ok("Calisan silme başarılı.");
+            employeeService.deleteEmployee(employee);
+            System.out.println("Calisan silindi");
+            return ResponseEntity.ok(true);
         }catch (Exception e){
             System.out.println("Calisan silme basarisiz.");
             throw  new RuntimeException();
